@@ -1,0 +1,59 @@
+@startuml
+class HiAgentClientAdapter {
++ AiAgentPO getAiAgent(AiTaskPO)
++ AgentClientInvokeDTO<T> invoke(AiTaskPO,List<OpenAiRequestContent>)
++ {static} HiAgentClientAdapter<U> adapt(AiAgentPO,AgentClientParserSupport<U>)
+}
+
+abstract class AbstractHiAgentClient {
+# OpenAiResponseParseDTO parse(ResponseEntity<String>,AgentPlatformEnum)
++ AiAgentPO getAiAgent(AiTaskPO)
++ AgentClientInvokeDTO<T> invoke(AiTaskPO,List<OpenAiRequestContent>)
+}
+
+class AbstractHiAgentClient$OutputContract {
+}
+abstract class AbstractParseResult {
+}
+class AbstractParseResult$ShareParseResult {
++ {static} ShareParseResult defaultParseResult()
+}
+
+class AgentClientFactory {
++ {static} AgentClientFactory getInstance()
++ IAgentClient<AbstractParseResult.ShareParseResult> getClient(TaskTypeEnum)
+}
+
+abstract class AbstractOpenAiAgentClientSupport {
+# ObjectMapper objectMapper
+# ModuleParserFactory moduleParserFactory
++ AgentClientInvokeDTO<T> invoke(AiTaskPO,List<OpenAiRequestContent>)
+# String getLogPrefix(AiTaskPO)
++ AiAgentPO getAiAgent(AiTaskPO)
+# ResponseEntity<String> executeHttpInvoke(AiTaskPO,List<OpenAiRequestContent>,AgentPlatformEnum)
+# OpenAiResponseParseDTO parse(ResponseEntity<String>,AgentPlatformEnum)
+# {abstract}T afterParse(OpenAiResponseParseDTO,AiTaskPO)
+}
+
+
+abstract class AgentClientParserSupport {
+# {abstract}OpenAiResponseParseDTO parse(ResponseEntity<String>,AgentPlatformEnum)
+# {abstract}T afterParse(OpenAiResponseParseDTO,AiTaskPO)
+}
+
+interface IAgentClient {
+~ AiAgentPO getAiAgent(AiTaskPO)
+~ AgentClientInvokeDTO<T> invoke(AiTaskPO,List<OpenAiRequestContent>)
+}
+
+
+
+IAgentClient <|.. HiAgentClientAdapter
+IAgentClient <|.. AbstractHiAgentClient
+AgentClientParserSupport <|-- AbstractHiAgentClient
+AbstractHiAgentClient +.. AbstractHiAgentClient$OutputContract
+AbstractParseResult +.. AbstractParseResult$ShareParseResult
+AbstractParseResult <|-- AbstractParseResult$ShareParseResult
+IAgentClient <|.. AbstractOpenAiAgentClientSupport
+AgentClientParserSupport <|-- AbstractOpenAiAgentClientSupport
+@enduml
