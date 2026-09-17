@@ -32,5 +32,4 @@ public interface IAgentClient<T extends AbstractParseResult> {
      */
     AgentClientInvokeDTO<T> invoke(AiTaskPO aiTaskPO, List<OpenAiRequestContent> content);
 
-
 }

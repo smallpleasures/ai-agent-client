@@ -61,7 +61,8 @@ public class HiAgentClientAdapter<T extends AbstractParseResult> implements IAge
             }
 
             // 让原Agent客户端做解析之后的业务逻辑处理，避免写多套
-            // 这里用AgentClientParserSupport类型，而不用AbstractOpenAiAgentClientSupport，因为只做一件事，那就是要它的afterParse能力，满足开闭原则
+            // 这里用AgentClientParserSupport类型，而不用AbstractOpenAiAgentClientSupport，
+            // 因为只做一件事，那就是要它的afterParse能力，满足开闭原则
             @Override
             protected U afterParse(OpenAiResponseParseDTO parseDTO, AiTaskPO aiTaskPO) {
                 return agentClientParserSupport.afterParse(parseDTO, aiTaskPO);

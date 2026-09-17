@@ -136,13 +136,5 @@ public abstract class AbstractOpenAiAgentClientSupport<T extends AbstractParseRe
         return openAiResponseParseDTO.setAgentModuleList(agentModuleList);
     };
 
-    /**
-     * 删除文件夹
-     *
-     */
-    private void deleteDocDirectory(String folder) {
-        log.info("清理文件夹");
-    }
-
     protected abstract T afterParse(OpenAiResponseParseDTO parseDTO, AiTaskPO aiTaskPO);
 }
